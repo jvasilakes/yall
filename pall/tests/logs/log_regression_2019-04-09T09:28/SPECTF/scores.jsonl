@@ -1,0 +1,14 @@
+{"query_strategy": "Combined Sampler: qs1: Entropy Sampler; qs2 Min Max Sampler; beta=dynamic", "dataset": "SPECTF", "draws": [9, 240], "alc": "0.5506", "max_accuracy": "0.8889"}
+{"query_strategy": "Combined Sampler: qs1: Entropy Sampler; qs2 Min Max Sampler; beta=1.0", "dataset": "SPECTF", "draws": [9, 240], "alc": "0.5931", "max_accuracy": "0.8889"}
+{"query_strategy": "Distance to Center Sampler", "dataset": "SPECTF", "draws": [9, 240], "alc": "0.5863", "max_accuracy": "0.8889"}
+{"query_strategy": "Density Sampler", "dataset": "SPECTF", "draws": [9, 240], "alc": "0.5931", "max_accuracy": "0.8889"}
+{"query_strategy": "DistDiv Sampler: qs1=Entropy Sampler; qs2=Min Max Sampler; lambda=dynamic", "dataset": "SPECTF", "draws": [9, 240], "alc": "0.5522", "max_accuracy": "0.8519"}
+{"query_strategy": "DistDiv Sampler: qs1=Entropy Sampler; qs2=Min Max Sampler; lambda=0.5", "dataset": "SPECTF", "draws": [9, 240], "alc": "0.5995", "max_accuracy": "0.8889"}
+{"query_strategy": "Entropy Sampler", "dataset": "SPECTF", "draws": [9, 240], "alc": "0.5738", "max_accuracy": "0.8889"}
+{"query_strategy": "Least Confidence with Bias", "dataset": "SPECTF", "draws": [9, 240], "alc": "0.5738", "max_accuracy": "0.8889"}
+{"query_strategy": "Least Confidence with Dynamic Bias", "dataset": "SPECTF", "draws": [9, 240], "alc": "0.5738", "max_accuracy": "0.8889"}
+{"query_strategy": "Least Confidence", "dataset": "SPECTF", "draws": [9, 240], "alc": "0.5738", "max_accuracy": "0.8889"}
+{"query_strategy": "Margin Sampler", "dataset": "SPECTF", "draws": [9, 240], "alc": "0.5738", "max_accuracy": "0.8889"}
+{"query_strategy": "Min Max Sampler", "dataset": "SPECTF", "draws": [9, 240], "alc": "0.5746", "max_accuracy": "0.8889"}
+{"query_strategy": "Random Sampler", "dataset": "SPECTF", "draws": [9, 240], "alc": "0.5660", "max_accuracy": "0.8889"}
+{"query_strategy": "Simple Margin Sampler", "dataset": "SPECTF", "draws": [9, 240], "alc": "0.5428", "max_accuracy": "0.8519"}

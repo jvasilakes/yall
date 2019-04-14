@@ -1,0 +1,22 @@
+{"query_strategy": "Combined Sampler: qs1: Entropy Sampler; qs2 Min Max Sampler", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9231", "max_accuracy": "0.9649"}
+{"query_strategy": "Distance to Center Sampler", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.8733", "max_accuracy": "0.9649"}
+{"query_strategy": "Density Sampler", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.8989", "max_accuracy": "0.9649"}
+{"query_strategy": "Entropy Sampler", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9273", "max_accuracy": "0.9649"}
+{"query_strategy": "Least Confidence with Dynamic Bias", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9275", "max_accuracy": "0.9649"}
+{"query_strategy": "Least Confidence with Bias", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9273", "max_accuracy": "0.9649"}
+{"query_strategy": "Least Confidence", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9273", "max_accuracy": "0.9649"}
+{"query_strategy": "Margin Sampler", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9273", "max_accuracy": "0.9649"}
+{"query_strategy": "Min Max Sampler", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9135", "max_accuracy": "0.9825"}
+{"query_strategy": "Random Sampler", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9250", "max_accuracy": "0.9649"}
+{"query_strategy": "Simple Margin Sampler", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9273", "max_accuracy": "0.9649"}
+{"query_strategy": "Combined Sampler: qs1: Entropy Sampler; qs2 Min Max Sampler", "dataset": "iris", "draws": [3, 120], "alc": "0.8862", "max_accuracy": "0.9667"}
+{"query_strategy": "Distance to Center Sampler", "dataset": "iris", "draws": [3, 120], "alc": "0.5305", "max_accuracy": "0.9667"}
+{"query_strategy": "Density Sampler", "dataset": "iris", "draws": [3, 120], "alc": "0.6598", "max_accuracy": "0.9667"}
+{"query_strategy": "Entropy Sampler", "dataset": "iris", "draws": [3, 120], "alc": "0.8690", "max_accuracy": "0.9667"}
+{"query_strategy": "Least Confidence with Dynamic Bias", "dataset": "iris", "draws": [3, 120], "alc": "0.7477", "max_accuracy": "0.9667"}
+{"query_strategy": "Least Confidence with Bias", "dataset": "iris", "draws": [3, 120], "alc": "0.8707", "max_accuracy": "0.9667"}
+{"query_strategy": "Least Confidence", "dataset": "iris", "draws": [3, 120], "alc": "0.8730", "max_accuracy": "0.9667"}
+{"query_strategy": "Margin Sampler", "dataset": "iris", "draws": [3, 120], "alc": "0.8747", "max_accuracy": "0.9667"}
+{"query_strategy": "Min Max Sampler", "dataset": "iris", "draws": [3, 120], "alc": "0.8598", "max_accuracy": "0.9667"}
+{"query_strategy": "Random Sampler", "dataset": "iris", "draws": [3, 120], "alc": "0.8511", "max_accuracy": "0.9667"}
+{"query_strategy": "Simple Margin Sampler", "dataset": "iris", "draws": [3, 120], "alc": "0.7540", "max_accuracy": "0.9667"}

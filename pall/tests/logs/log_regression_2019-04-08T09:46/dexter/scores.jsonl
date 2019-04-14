@@ -1,0 +1,13 @@
+{"query_strategy": "Combined Sampler: qs1: Entropy Sampler; qs2 Min Max Sampler; beta=1.0", "dataset": "dexter", "draws": [10, 540], "alc": "0.8778", "max_accuracy": "0.9667"}
+{"query_strategy": "Combined Sampler: qs1: Entropy Sampler; qs2 Min Max Sampler; beta=dynamic", "dataset": "dexter", "draws": [10, 540], "alc": "0.8728", "max_accuracy": "0.9833"}
+{"query_strategy": "Distance to Center Sampler", "dataset": "dexter", "draws": [10, 540], "alc": "0.8651", "max_accuracy": "0.9667"}
+{"query_strategy": "Density Sampler", "dataset": "dexter", "draws": [10, 540], "alc": "0.8569", "max_accuracy": "0.9833"}
+{"query_strategy": "DistDivSampler: qs1=Entropy Sampler; qs2=Min Max Sampler; lambda=dynamic", "dataset": "dexter", "draws": [10, 540], "alc": "0.8738", "max_accuracy": "0.9833"}
+{"query_strategy": "DistDivSampler: qs1=Entropy Sampler; qs2=Min Max Sampler; lambda=0.5", "dataset": "dexter", "draws": [10, 540], "alc": "0.8756", "max_accuracy": "0.9833"}
+{"query_strategy": "Entropy Sampler", "dataset": "dexter", "draws": [10, 540], "alc": "0.8899", "max_accuracy": "0.9833"}
+{"query_strategy": "Least Confidence with Dynamic Bias", "dataset": "dexter", "draws": [10, 540], "alc": "0.8541", "max_accuracy": "0.9833"}
+{"query_strategy": "Least Confidence with Bias", "dataset": "dexter", "draws": [10, 540], "alc": "0.8821", "max_accuracy": "0.9833"}
+{"query_strategy": "Least Confidence", "dataset": "dexter", "draws": [10, 540], "alc": "0.8899", "max_accuracy": "0.9833"}
+{"query_strategy": "Margin Sampler", "dataset": "dexter", "draws": [10, 540], "alc": "0.8899", "max_accuracy": "0.9833"}
+{"query_strategy": "Min Max Sampler", "dataset": "dexter", "draws": [10, 540], "alc": "0.8686", "max_accuracy": "0.9667"}
+{"query_strategy": "Simple Margin Sampler", "dataset": "dexter", "draws": [10, 540], "alc": "0.8899", "max_accuracy": "0.9833"}

@@ -1,0 +1,14 @@
+{"query_strategy": "Combined Sampler: qs1: Entropy Sampler; qs2 Min Max Sampler; beta=dynamic", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9174", "max_accuracy": "0.9649"}
+{"query_strategy": "Combined Sampler: qs1: Entropy Sampler; qs2 Min Max Sampler; beta=1.0", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9233", "max_accuracy": "0.9649"}
+{"query_strategy": "Distance to Center Sampler", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.8735", "max_accuracy": "0.9649"}
+{"query_strategy": "Density Sampler", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.8988", "max_accuracy": "0.9649"}
+{"query_strategy": "DistDivSampler: qs1=Entropy Sampler; qs2=Min Max Sampler; lambda=dynamic", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9164", "max_accuracy": "0.9825"}
+{"query_strategy": "DistDivSampler: qs1=Entropy Sampler; qs2=Min Max Sampler; lambda=0.5", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9239", "max_accuracy": "0.9649"}
+{"query_strategy": "Entropy Sampler", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9273", "max_accuracy": "0.9649"}
+{"query_strategy": "Least Confidence with Dynamic Bias", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9277", "max_accuracy": "0.9649"}
+{"query_strategy": "Least Confidence with Bias", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9273", "max_accuracy": "0.9649"}
+{"query_strategy": "Least Confidence", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9273", "max_accuracy": "0.9649"}
+{"query_strategy": "Margin Sampler", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9273", "max_accuracy": "0.9649"}
+{"query_strategy": "Min Max Sampler", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9138", "max_accuracy": "0.9825"}
+{"query_strategy": "Random Sampler", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9250", "max_accuracy": "0.9649"}
+{"query_strategy": "Simple Margin Sampler", "dataset": "breast_cancer", "draws": [10, 512], "alc": "0.9273", "max_accuracy": "0.9649"}
