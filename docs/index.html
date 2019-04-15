@@ -1,0 +1,218 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>PALL: Python Active Learning Library &#8212; pall 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="pall-python-active-learning-library">
+<h1>PALL: Python Active Learning Library<a class="headerlink" href="#pall-python-active-learning-library" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="www.python.org/downloads">Python 3</a></li>
+<li><a class="reference external" href="www.numpy.org">NumPy</a></li>
+<li><a class="reference external" href="www.scipy.org">SciPy</a></li>
+<li><a class="reference external" href="www.scikit-learn.org">scikit-learn</a></li>
+</ul>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<p>Clone or download this repository and run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="a-motivating-example">
+<h3>A motivating example<a class="headerlink" href="#a-motivating-example" title="Permalink to this headline">¶</a></h3>
+<p>Active learning can often discover a subset of the full data set that generalizes well
+to the test set. For example, we consider the Iris data set:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pall</span> <span class="k">import</span> <span class="n">ActiveLearningModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pall.querystrategies</span> <span class="k">import</span> <span class="n">Margin</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pall.utils</span> <span class="k">import</span> <span class="n">plot_learning_curve</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="k">import</span> <span class="n">load_iris</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span> <span class="k">as</span> <span class="n">LR</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="k">import</span> <span class="n">clone</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">train_X</span><span class="p">,</span> <span class="n">test_X</span><span class="p">,</span> <span class="n">train_y</span><span class="p">,</span> <span class="n">test_y</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+<span class="gp">... </span>                                                    <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lr</span> <span class="o">=</span> <span class="n">LR</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s2">&quot;liblinear&quot;</span><span class="p">,</span> <span class="n">multi_class</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lr</span> <span class="o">=</span> <span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_X</span><span class="p">,</span> <span class="n">train_y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">lr</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">test_X</span><span class="p">,</span> <span class="n">test_y</span><span class="p">))</span>
+<span class="go">0.967</span>
+</pre></div>
+</div>
+<p>Using the full data set, logistic regression acheives an accuracy of 0.967 on the test data.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">alm</span> <span class="o">=</span> <span class="n">ActiveLearningModel</span><span class="p">(</span><span class="n">clone</span><span class="p">(</span><span class="n">lr</span><span class="p">),</span> <span class="n">Margin</span><span class="p">(),</span>
+<span class="gp">... </span>                          <span class="n">eval_metric</span><span class="o">=</span><span class="s2">&quot;accuracy&quot;</span><span class="p">,</span>
+<span class="gp">... </span>                          <span class="n">U_proportion</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">accuracies</span><span class="p">,</span> <span class="n">choices</span> <span class="o">=</span> <span class="n">alm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">train_X</span><span class="p">,</span> <span class="n">test_X</span><span class="p">,</span> <span class="n">train_y</span><span class="p">,</span> <span class="n">test_y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot_learning_curve</span><span class="p">(</span><span class="n">accuracies</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">accuracies</span><span class="p">),</span>
+<span class="gp">... </span>                    <span class="n">eval_metric</span><span class="o">=</span><span class="s2">&quot;accuracy&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure">
+<img alt="_images/learning_curve.png" src="_images/learning_curve.png" />
+</div>
+<p>From the learning curve we see that only the first 25 or so data points
+are required to acheive perfect 1.0 accuracy on the test data.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lr_small</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="n">lr</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lr_small</span> <span class="o">=</span> <span class="n">lr_small</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">alm</span><span class="o">.</span><span class="n">L</span><span class="o">.</span><span class="n">X</span><span class="p">[:</span><span class="mi">25</span><span class="p">,</span> <span class="p">],</span> <span class="n">alm</span><span class="o">.</span><span class="n">L</span><span class="o">.</span><span class="n">y</span><span class="p">[:</span><span class="mi">25</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">lr_small</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">test_X</span><span class="p">,</span> <span class="n">test_y</span><span class="p">))</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="supported-query-strategies">
+<h3>Supported query strategies<a class="headerlink" href="#supported-query-strategies" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Random Sampling (passive learning)</li>
+<li>Uncertainty Sampling<ul>
+<li>Entropy Sampling</li>
+<li>Least Confidence</li>
+<li>Least Confidence with Bias</li>
+<li>Least Confidence with Dynamic Bias</li>
+<li>Margin Sampling</li>
+<li>Simple Margin Sampling</li>
+</ul>
+</li>
+<li>Representative Sampling<ul>
+<li>Density Sampling</li>
+<li>Distance to Center</li>
+<li>MinMax Sampling</li>
+</ul>
+</li>
+<li>Combined Sampling<ul>
+<li>Beta-weighted Combined Sampling</li>
+<li>Lambda-weighted Combined Sampling</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="running-tests">
+<h3>Running Tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h3>
+<p>From the project home directory run</p>
+<blockquote>
+<div>python -m unittest discover</div></blockquote>
+</div>
+</div>
+<div class="section" id="authors">
+<h2>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Jake Vasilakes - <a class="reference external" href="mailto:jvasilakes&#37;&#52;&#48;gmail&#46;com">jvasilakes<span>&#64;</span>gmail<span>&#46;</span>com</a></li>
+</ul>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p>This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.</p>
+</div>
+<div class="section" id="acknowledgements">
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">¶</a></h2>
+<p>This project grew out of a study of active learning methods for biomedical text classification. The paper associated with this study can be found at [<a class="reference external" href="https://doi.org/10.1093/jamiaopen/ooy021](https://doi.org/10.1093/jamiaopen/ooy021">https://doi.org/10.1093/jamiaopen/ooy021](https://doi.org/10.1093/jamiaopen/ooy021</a>).</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">pall</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Jake Vasilakes.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
