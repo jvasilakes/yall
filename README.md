@@ -64,7 +64,7 @@ Using the full data set, logistic regression acheives an accuracy of 0.967 on th
 >>> accuracies, choices = alm.run(train_X, test_X, train_y, test_y)
 >>> plot_learning_curve(accuracies, 0, len(accuracies), eval_metric="accuracy")
 ```
-![](images/learning_curve.png?raw=true)
+![](docs/images/learning_curve.png?raw=true)
 
 From the learning curve we see that only the first 25 or so data points
 are required to acheive perfect 1.0 accuracy on the test data.

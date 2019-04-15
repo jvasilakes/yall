@@ -1,11 +1,9 @@
 *.swp
 *.pyc
-*.png
 *.DS_Store
+__pycache__
 pall/activelearning_gen.py
-pall/datasets/__pycache__/
-pall/tests/__pycache__
-pall/tests/*.swp
-pall/tests/*.pyc
 pall_jvasilakes.egg-info
-pall/platt_svm.py
+_build
+_static
+_templates
