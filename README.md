@@ -58,7 +58,7 @@ to the test set. For example, we consider the Iris data set:
 ```
 Using the full data set, logistic regression acheives an accuracy of 0.967 on the test data.
 
-```
+```python
 >>> alm = ActiveLearningModel(clone(lr), Margin(), eval_metric="accuracy",
 ...                           U_proportion=0.95, random_state=0)
 >>> accuracies, choices = alm.run(train_X, test_X, train_y, test_y)

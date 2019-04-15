@@ -5,17 +5,6 @@ from .containers import Data
 from .querystrategies import QueryStrategy, SimpleMargin
 from .initializations import LDS
 
-'''
->>> from sklearn.svm import NuSVC
->>> clf = NuSVC(nu= 0.46, probability=True)
->>> qs = LeastConfidence(model_change=False)
->>> learner = ActiveLearningModel(clf, qs)
->>> train_X, test_X, train_y, test_y = read_data(datafile)
->>> type(train_X)
-<class 'numpy.ndarray'>
->>> scores = learner.run(train_X, test_X, train_y, test_y)
-'''
-
 
 class ActiveLearningModel(object):
 
@@ -185,7 +174,7 @@ class ActiveLearningModel(object):
         choice_order = {'X': self.L.X[mask], 'y': self.L.y[mask]}
         return choice_order
 
-    def run(self, train_X, test_X, train_y, test_y, ndraws=None):
+    def run(self, train_X, test_X, train_y, test_y, ndraws=None, verbose=0):
         '''
         Run the active learning model. Saves AUC scores for
         each sampling iteration.
@@ -196,6 +185,7 @@ class ActiveLearningModel(object):
         :param np.array test_y: Test data labels.
         :param int ndraws: Number of times to query the unlabeled set.
                             If None, query entire unlabeled set.
+        :param int verbose: If > 0, print information.
         :returns: AUC scores for each sampling iteration.
         :rtype: numpy.ndarray(shape=(ndraws, ))
         '''
@@ -205,6 +195,8 @@ class ActiveLearningModel(object):
             ndraws = self.U.X.shape[0]
         scores = np.zeros(ndraws, dtype=np.float32)
         for i in range(ndraws):
+            if verbose > 0:
+                print(f"{i}\r", end='')
             self.train()
             auc = self.score()
             scores[i] = auc
