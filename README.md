@@ -1,5 +1,7 @@
 # PALL: Python Active Learning Library
 
+<pall.readthedocs.io/>
+
 ## Getting Started
 
 ### Prerequisites
