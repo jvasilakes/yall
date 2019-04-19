@@ -2,8 +2,6 @@ certifi==2019.3.9
 cycler==0.10.0
 kiwisolver==1.0.1
 matplotlib==3.0.3
-mkl-fft==1.0.10
-mkl-random==1.0.2
 numpy==1.16.2
 packaging==19.0
 pyparsing==2.4.0
