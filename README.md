@@ -1,6 +1,6 @@
 # PALL: Python Active Learning Library
 
-<pall.readthedocs.io/>
+<https://pall.readthedocs.io/>
 
 ## Getting Started
 
