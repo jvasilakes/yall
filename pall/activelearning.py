@@ -3,7 +3,7 @@ from sklearn import model_selection, metrics
 
 from .containers import Data
 from .querystrategies import QueryStrategy, SimpleMargin
-from .initializations import LDS
+from .initializations import LDSCentrality as LDS
 
 
 class ActiveLearningModel(object):

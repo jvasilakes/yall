@@ -7,6 +7,7 @@ PALL: Python Active Learning Library
 
    source/activelearning
    source/containers
+   source/initializations
    source/querystrategies
    source/utils
    source/pall.datasets
@@ -36,11 +37,9 @@ Active learning can often discover a subset of the full data set that generalize
 to the test set. For example, we consider the Iris data set:
 
 >>> import numpy as np
-
 >>> from pall import ActiveLearningModel
 >>> from pall.querystrategies import Margin
 >>> from pall.utils import plot_learning_curve
-
 >>> from sklearn.datasets import load_iris
 >>> from sklearn.model_selection import train_test_split
 >>> from sklearn.linear_model import LogisticRegression as LR
@@ -49,8 +48,7 @@ to the test set. For example, we consider the Iris data set:
 >>> np.random.seed(0)
 >>> iris = load_iris()
 >>> X, y = iris.data, iris.target
->>> train_X, test_X, train_y, test_y = train_test_split(X, y,
-...                                                     test_size=0.2)
+>>> train_X, test_X, train_y, test_y = train_test_split(X, y, test_size=0.2)
 >>> lr = LR(solver="liblinear", multi_class="auto")
 >>> lr = lr.fit(train_X, train_y)
 >>> print(lr.score(test_X, test_y))

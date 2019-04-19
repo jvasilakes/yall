@@ -5,15 +5,23 @@ from sklearn.neighbors import NearestNeighbors
 
 
 class CentralityMeasure(object):
+    """
+    :math:`score(x)= \\frac{1}{k-1} \\sum_{x_j \\in NN(x_i)} \\omega(x_i, x_j)`
+
+    :math:`NN(x)`: The k nearest neighbors of :math:`x`.
+
+    :math:`\\omega`: A weight method.
+    """
 
     def __init__(self, X, k):
         self.X = X
         self.k = int(k)
-        self.A, self.D = self._make_graph(X)
+        # Adjacency and distance matrices
+        self.A, self.D = self._make_graphs()
 
-    def _make_graph(self, X):
+    def _make_graphs(self):
         neighbors, distances = self._KNN()
-        # Convert these to the adjacency matrix and distance matrix
+        # Convert these to sparse matrix form.
         A, D = self._to_sparse_adjacency(neighbors, distances)
         return A, D
 
@@ -33,11 +41,69 @@ class CentralityMeasure(object):
             D[i, js] = distances[i]
         return A, D
 
-    def centrality(self):
+    def weight(self, i, j):
+        """
+        Computes the weight between nodes i and j
+        according to the graph matrix.
+        """
         raise NotImplementedError
+
+    def centrality(self):
+        scores = np.zeros(self.X.shape[0], dtype=float)
+        for x_i in range(self.X.shape[0]):
+            neighbor_idxs = np.nonzero(self.A[x_i])[1]
+            score = np.sum([self.weight(x_i, x_j) for x_j in neighbor_idxs])
+            scores[x_i] = score / (self.k - 1)
+        return scores
+
+
+class ClosenessCentrality(CentralityMeasure):
+    """
+    :math:`\\omega(x_i, x_j) = \\frac{1}{dist(x_i, x_j)}`
+    """
+
+    def __init__(self, X, k=30):
+        super().__init__(X, k)
+        # Use the distance matrix
+
+    def weight(self, i, j):
+        dist = self.D[i, j]
+        # If the distance is 0 that means that we have two identical points.
+        # Hence their similarity is infinite.
+        if dist == 0:
+            msg = "inf generated. Check that data does not include duplicates"
+            warnings.warn(msg, RuntimeWarning)
+            return np.inf
+        # Return the similarity of the two points
+        # N.B. This is actually the harmonic closeness centrality.
+        return 1 / dist
+
+
+class DegreeCentrality(CentralityMeasure):
+    """
+    :math:`\\omega(x_i, x_j) = \\delta_{ij}`
+    """
+
+    def __init__(self, X, k=30):
+        super().__init__(X, k)
+        # Use the adjacency matrix
+        self.graph = self.A
+
+    def weight(self, i, j):
+        # 1 if i is connected to j, else 0.
+        return self.A[j, i]
 
 
 class EigenvectorCentrality(CentralityMeasure):
+    """
+    We solve for the eigenvalues :math:`\\lambda` of the
+    adjecency matrix :math:`A`
+
+    :math:`Ax = \\lambda x`
+
+    The nodes with the highest eigenvalues :math:`\\lambda`
+    are the most central.
+    """
 
     def __init__(self, X, k=30, n="auto"):
         super().__init__(X, k)  # Computes the adjacency graph
@@ -53,79 +119,68 @@ class EigenvectorCentrality(CentralityMeasure):
         return vals
 
 
-class LDS(CentralityMeasure):
+class LDSCentrality(CentralityMeasure):
+    """
+    :math:`\\omega(x_i, x_j) = ~\\mid NN(x_i) \\cap NN(x_j) \\mid`
+    """
 
-    def __init__(self, X, k=30, weight_func="intersection"):
-        super().__init__(X, k)  # Computes the adjacency graph
-        self.weight_func = weight_func
+    def __init__(self, X, k=30):
+        super().__init__(X, k)
 
-    def _weight_intersection(self, graph, i, j):
+    def weight(self, i, j):
         # Because graph is the adjacency matrix,
-        # this is the same as the intersection
+        # this is the same as the intersection.
         # Elementwise multiplication
-        if graph.dtype != int and graph.dtype != bool:
-            msg = "Input does not seem to be an adjacency matrix."
-            warnings.warn(msg, RuntimeWarning)
-        return np.sum(graph[i, ].multiply(graph[j, ]))
-
-    def _weight_closeness(self, graph, i, j):
-        # N.B. graph must be a distance matrix.
-        if graph.dtype != float:
-            msg = "Input does not seem to be a distance matrix."
-            warnings.warn(msg, RuntimeWarning)
-        dist = graph[i, j]
-        # If the distance is 0 that means that we have two identical points.
-        # Hence their similarity is infinite.
-        if dist == 0:
-            msg = "inf generated. Check that data does not include duplicates"
-            warnings.warn(msg, RuntimeWarning)
-            return np.inf
-        # Return the similarity of the two points
-        return 1 / dist
-
-    def _weight_popularity(self, graph, i, j):
-        if graph.dtype != int and graph.dtype != bool:
-            msg = "Input does not seem to be an adjacency matrix."
-            warnings.warn(msg, RuntimeWarning)
-        # 1 if i is connected to j, else 0.
-        return graph[j, i]
-
-    def centrality(self):
-        weight_func_str = f"_weight_{self.weight_func}"
-        wf = getattr(self, weight_func_str)
-
-        # Closeness uses the distance matrix.
-        if self.weight_func == "closeness":
-            graph = self.D
-        else:
-            graph = self.A
-
-        scores = np.zeros(self.X.shape[0], dtype=float)
-        for x_i in range(self.X.shape[0]):
-            neighbor_idxs = np.nonzero(self.A[x_i])[1]
-            score = np.sum([wf(graph, x_i, x_j) for x_j in neighbor_idxs])
-            scores[x_i] = score / self.k
-        return scores
+        return np.sum(self.A[i, ].multiply(self.A[j, ]))
 
 
 if __name__ == "__main__":
+    import argparse
     import matplotlib.pyplot as plt
     from sklearn.datasets import load_iris, load_digits, load_breast_cancer
+    from pall.datasets import load_dexter
     from sklearn.manifold import TSNE
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dataset", type=str, default="iris",
+                        choices=["breast_cancer", "dexter", "digits", "iris"])
+    parser.add_argument("--metric", type=str, default="degree",
+                        choices=["closeness", "degree", "eigen", "lds"])
+    args = parser.parse_args()
 
     np.random.seed(0)
 
-    iris = load_digits()
-    X = TSNE(n_components=2).fit_transform(iris.data)
-    y = iris.target
+    if args.dataset == "breast_cancer":
+        dataset = load_breast_cancer()
+    elif args.dataset == "dexter":
+        dataset = load_dexter()
+    elif args.dataset == "digits":
+        dataset = load_digits()
+    elif args.dataset == "iris":
+        dataset = load_iris()
+    else:
+        raise ValueError(f"Unknown dataset '{args.dataset}'.")
 
+    X = dataset.data
+    y = dataset.target
+
+    K = 20
     N = 50
-    #cent = LDS(X, k=20, weight_func="intersection")
-    cent = EigenvectorCentrality(X, k=20, n='auto')
-    scores = cent.centrality()
+    if args.metric == "closeness":
+        cm = ClosenessCentrality(X, K)
+    elif args.metric == "degree":
+        cm = DegreeCentrality(X, K)
+    elif args.metric == "eigen":
+        cm = EigenvectorCentrality(X, K, n=N)
+    elif args.metric == "lds":
+        cm = LDSCentrality(X, K)
+
+    X = TSNE(n_components=2).fit_transform(X)
+    scores = cm.centrality()
     idxs = np.argsort(scores)[::-1][:N]
-    print(f"N: {len(idxs)}")
-    print(f"Scores: {scores.max()} {scores.min()}")
+    print(f"K: {K}")
+    print(f"N: {N}")
+    print(f"Scores: {scores.max():.3f} {scores.min():.3f}")
     mask = np.zeros(X.shape[0], dtype=bool)
     mask[idxs] = True
     LX = X[mask, ]

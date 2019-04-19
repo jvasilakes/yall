@@ -96,11 +96,11 @@ class UncertaintySampler(QueryStrategy):
         Model change wrapper around the scoring function. See doc
         for __score() above for usage insructions.
 
-        score_mc(x) = score(x, t) - w_o * score(x, t-1)
-            where score(x, t) = the score at time t
-                                according to the scoring function.
-                  score(x, t-1) = the score at the previous time step.
-                  w_o = 1 / |L|
+        :math:`score_{mc}(X) = score(X; t) - w_o score(X; t-1)`
+
+        :math:`score(X, t)`: The score at time t
+
+        :math:`w_o = \\frac{1}{\\mid L \\mid}`
 
         :param function score_func: Scoring function to wrap.
         :returns: Wrapped scoring function.
@@ -137,9 +137,9 @@ class CombinedSampler(QueryStrategy):
     Allows one sampler's scores to be weighted by anothers according
     to the equation:
 
-        score = score_qs1(x) * score_qs2(x)**beta
+    :math:`score(x) = score_{qs1}(x) \\times score_{qs2}(x)^{\\beta}`
 
-    N.B. Assumes x* = argmax(score)
+    Assumes :math:`x^* = argmax(score)`
     '''
     # TODO: test if choice_metric matches choose() of qs1 and qs2.
     def __init__(self, qs1=None, qs2=None, beta=1, choice_metric=np.argmax):
