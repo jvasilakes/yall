@@ -186,6 +186,8 @@ class GreedySetCover(SetCover):
         return np.array(counts)[:n, 0]
 
 
+# TODO: Speed up by solving a series of MIPs,
+# one for each distinct cluster in the distance matrix.
 class FacilityLocation(SetCover):
     """
     This is a simplified version of the uncapacitated facility
@@ -227,8 +229,9 @@ class FacilityLocation(SetCover):
 
     """
 
-    def __init__(self, X, k=30):
+    def __init__(self, X, k=30, solver="GUROBI"):
         super().__init__(X, k)
+        self.solver = solver
 
     def _distance_matrix(self):
         n = self.neighbors.shape[0]
@@ -248,7 +251,7 @@ class FacilityLocation(SetCover):
         constraints = [cp.sum(y) == D.shape[0],
                        cp.sum(cp.max(y, axis=1)) <= n - epsilon]
         prob = cp.Problem(cp.Minimize(cost), constraints)
-        prob.solve(solver="GUROBI")
+        prob.solve(solver=solver)
 
         y_int = np.around(y.value)
         centers = np.argwhere(np.max(y_int, axis=1) == 1).ravel()
@@ -274,7 +277,7 @@ if __name__ == "__main__":
                         help="Number of initial data points to find.")
     args = parser.parse_args()
 
-    np.random.seed(0)
+    np.random.seed(20)
 
     if args.dataset == "breast_cancer":
         dataset = load_breast_cancer()
