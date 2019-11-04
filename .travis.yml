@@ -10,4 +10,4 @@ script:
   - flake8 yall/ tests/
   - py.test --cov=yall tests/
 after_success:
-  -coveralls
+  - coveralls
