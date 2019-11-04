@@ -1,7 +1,7 @@
-pall.containers module
+yall.containers module
 ----------------------
 
-.. automodule:: pall.containers
+.. automodule:: yall.containers
     :members:
     :undoc-members:
     :show-inheritance:

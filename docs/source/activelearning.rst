@@ -1,7 +1,7 @@
-pall.ActiveLearningModel
+yall.ActiveLearningModel
 ------------------------
 
-.. automodule:: pall.activelearning
+.. automodule:: yall.activelearning
     :members:
     :undoc-members:
     :show-inheritance:

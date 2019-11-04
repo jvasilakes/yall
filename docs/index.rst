@@ -1,5 +1,5 @@
-PALL: Python Active Learning Library
-====================================
+Y'ALL: Yet another Active Learning Library
+==========================================
 
 .. toctree::
    :maxdepth: 1
@@ -10,7 +10,7 @@ PALL: Python Active Learning Library
    source/initializations
    source/querystrategies
    source/utils
-   source/pall.datasets
+   source/yall.datasets
 
 
 Prerequisites
@@ -37,9 +37,9 @@ Active learning can often discover a subset of the full data set that generalize
 to the test set. For example, we consider the Iris data set:
 
 >>> import numpy as np
->>> from pall import ActiveLearningModel
->>> from pall.querystrategies import Margin
->>> from pall.utils import plot_learning_curve
+>>> from yall import ActiveLearningModel
+>>> from yall.querystrategies import Margin
+>>> from yall.utils import plot_learning_curve
 >>> from sklearn.datasets import load_iris
 >>> from sklearn.model_selection import train_test_split
 >>> from sklearn.linear_model import LogisticRegression as LR
@@ -104,9 +104,13 @@ Supported query strategies
 Running Tests
 -------------
 
-From the project home directory run
+First install `pytest-cov <https://github.com/pytest-dev/pytest-cov>`_
 
-        python -m unittest discover
+Then, from the project home directory run
+
+::
+
+        py.test --cov=yall tests
 
 
 Authors
@@ -116,9 +120,12 @@ Authors
 
 License
 -------
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+This project is licensed under the MIT License.
+See `LICENSE <https://github.com/jvasilakes/yall/blob/master/LICENSE>`_
+for details.
 
 
 Acknowledgements
 ----------------
-This project grew out of a study of active learning methods for biomedical text classification. The paper associated with this study can be found at [https://doi.org/10.1093/jamiaopen/ooy021](https://doi.org/10.1093/jamiaopen/ooy021).
+This project grew out of a study of active learning methods for biomedical text classification. The paper associated with this study can be found at
+https://doi.org/10.1093/jamiaopen/ooy021

@@ -2,8 +2,8 @@ import unittest
 import warnings
 import numpy as np
 
-import pall.querystrategies as QS
-from pall.activelearning import Data
+import yall.querystrategies as QS
+from yall.activelearning import Data
 
 from packaging import version
 from sklearn import __version__

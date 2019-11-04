@@ -3,8 +3,8 @@ import warnings
 import numpy as np
 from sklearn.svm import SVC
 
-import pall.querystrategies as QS
-from pall.activelearning import ActiveLearningModel
+import yall.querystrategies as QS
+from yall.activelearning import ActiveLearningModel
 
 
 def disable_DeprecationWarning(fn):

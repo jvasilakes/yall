@@ -1,7 +1,7 @@
-pall.initializations module
+yall.initializations module
 ---------------------------
 
-.. automodule:: pall.initializations
+.. automodule:: yall.initializations
     :members:
     :undoc-members:
     :show-inheritance:

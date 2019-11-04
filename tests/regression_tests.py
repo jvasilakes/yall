@@ -12,10 +12,10 @@ from sklearn.datasets import load_iris, load_breast_cancer, fetch_openml
 from sklearn.utils import shuffle
 from sklearn.model_selection import train_test_split
 
-import pall.querystrategies as QS
-from pall.activelearning import ActiveLearningModel
-from pall.utils import compute_alc, plot_learning_curve
-from pall.datasets import load_dexter, load_spect, load_spectf
+import yall.querystrategies as QS
+from yall.activelearning import ActiveLearningModel
+from yall.utils import compute_alc, plot_learning_curve
+from yall.datasets import load_dexter, load_spect, load_spectf
 
 
 # Set the logfile name for all dataset tests.

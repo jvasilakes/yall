@@ -1,10 +1,10 @@
-pall.datasets
+yall.datasets
 =====================
 
-pall.datasets.base module
+yall.datasets.base module
 -------------------------
 
-.. automodule:: pall.datasets.base
+.. automodule:: yall.datasets.base
     :members:
     :undoc-members:
     :show-inheritance:

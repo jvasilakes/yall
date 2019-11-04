@@ -1,7 +1,7 @@
-pall.utils module
+yall.utils module
 -----------------
 
-.. automodule:: pall.utils
+.. automodule:: yall.utils
     :members:
     :undoc-members:
     :show-inheritance:

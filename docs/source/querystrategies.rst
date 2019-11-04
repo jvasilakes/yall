@@ -1,7 +1,7 @@
-pall.querystrategies
+yall.querystrategies
 --------------------
 
-.. automodule:: pall.querystrategies
+.. automodule:: yall.querystrategies
     :members:
     :undoc-members:
     :show-inheritance:

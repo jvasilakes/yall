@@ -1,3 +1,3 @@
-# So we can import pall.
+# So we can import yall.
 import sys
 sys.path.append("..")

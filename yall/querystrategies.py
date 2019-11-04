@@ -173,7 +173,7 @@ class CombinedSampler(QueryStrategy):
         Dynamic beta is computed according to the ratio of number of labeled
         to unlabeled samples.
 
-        beta = 2|U|/|L|
+        :math:`\beta = 2|U|/|L|`
         :returns: beta
         :rtype: float
         '''
@@ -223,7 +223,8 @@ class DistDivSampler(QueryStrategy):
     "Active learning for clinical text classification:
     is it better than random sampling?"
 
-    x = argmin_x [λ · score_qs1(x) + (1 - λ) · score_qs2(x)]
+    :math:`x^* = argmin_x (\\lambda score_{qs1}(x) +
+    (1 - \\lambda) score_{qs2}(x))`
     '''
     def __init__(self, qs1=None, qs2=None, lam=0.5, choice_metric=np.argmax):
         '''
@@ -331,7 +332,7 @@ class SimpleMargin(QueryStrategy):
     '''
     Finds the example x that is closest to the separating hyperplane.
 
-    x = argmin_x |f(x)|
+    :math:`x^* = argmin_x |f(x)|`
     '''
     def __init__(self):
         super().__init__()
@@ -373,9 +374,10 @@ class Margin(QueryStrategy):
     with the smallest difference between the posterior probabilities
     of the two most probable class labels.
 
-    x = argmin_x P_clf(y_hat1|x) - P_clf(y_hat2|x)
-        where y_hat1 is the most probable label
-          and y_hat2 is the second most probable label.
+    :math:`x^* = argmin_x P(\\hat{y_1}|x) - P(\\hat{y_2}|x)`
+
+        where :math:`\\hat{y_1}` is the most probable label
+          and :math:`\\hat{y_2}` is the second most probable label.
 
     '''
     def __init__(self):
@@ -415,7 +417,7 @@ class Entropy(UncertaintySampler):
     Entropy Sampler. Chooses the member from the unlabeled set
     with the greatest entropy across possible labels.
 
-    x = argmax_x -sum_i (P_clf(y_i|x) * log2(P_clf(y_i|x)))
+    :math:`x^* = argmax_x -\\sum_i P(y_i|x) \\times log_2(P(y_i|x))`
     '''
     def __init__(self, model_change=False):
         super().__init__(model_change=model_change)
@@ -450,8 +452,9 @@ class LeastConfidence(UncertaintySampler):
     the unlabeled set with the greatest uncertainty, i.e. the greatest
     posterior probability of all labels except the most likely one.
 
-    x = argmax_x 1 - P_clf(y_hat|x)
-        where y_hat = argmax_y P_clf(y|x)
+    :math:`x^* = argmax_x 1 - P(\\hat{y}|x)`
+
+        where :math:`\\hat{y} = argmax_y P(y|x)`
     '''
     def __init__(self, model_change=False):
         super().__init__(model_change=model_change)
@@ -481,10 +484,20 @@ class LeastConfidenceBias(UncertaintySampler):
     Least confidence with bias. This is the same as least confidence, but
     moves the decision boundary according to the current class distribution.
 
-    x = argmax_x -| P_clf(y_hat|x) / P_max         if P_clf(y_hat|x) < P_max
-                  | (1 - P_clf(y_hat|x)) / P_max   otherwise
-            where P_max = mean(0.5, 1 - pp)
-                where pp = % of positive examples in labeled_set.
+    .. math::
+
+        x^* =
+        \\Biggl \\lbrace
+        {
+        \\frac{P(\\hat{y}|x)}{P_{max}}, \\text{ if } {P(\\hat{y}|x) < P_{max}}
+        \\atop
+        \\frac{1 - P(\\hat{y}|x)}{P_{max}}, \\text{ otherwise }
+        }
+
+    where
+
+    :math:`P_{max} = mean(0.5, 1 - pp)` and
+    :math:`pp` is the percentage of positive examples in the labeled set.
     '''
     def __init__(self, model_change=False):
         super().__init__(model_change)
@@ -520,14 +533,26 @@ class LeastConfidenceDynamicBias(UncertaintySampler):
     with bias, but the bias also adjusts for the relative sizes of the
     labeled and unlabeled data sets.
 
-    x = argmax_x -| P_clf(y_hat|x) / P_max         if P_clf(y_hat|x) < P_max
-                  | (1 - P_clf(y_hat|x)) / P_max   otherwise
-            where P_max = w_b * (1 - pp) + w_u * 0.5
-              where pp = % of positive examples in labeled_set.
-                    w_b = 1 - w_u
-                  where w_u = |L| / |U_0|
-                    where U_0 = the initial unlabeled set.
+    .. math::
 
+        x^* =
+        \\Biggl \\lbrace
+        {
+        \\frac{P(\\hat{y}|x)}{P_{max}}, \\text{ if } {P(\\hat{y}|x) < P_{max}}
+        \\atop
+        \\frac{1 - P(\\hat{y}|x)}{P_{max}}, \\text{ otherwise }
+        }
+
+    where
+
+    :math:`P_{max} = (1 - pp)w_b + 0.5w_y`
+
+    :math:`pp` is the percentage of positive examples in the labeled set.
+
+    :math:`w_u = \\frac{|L|}{U_0}` and
+    :math:`U_0` is the initial unlabeled set.
+
+    :math:`w_b = 1 - w_u`
     '''
     def __init__(self, model_change=False):
         super().__init__(model_change)
@@ -566,9 +591,11 @@ class DistanceToCenter(QueryStrategy):
     to the average x (center) in the labeled data set and computes
     the similarity using the equation below.
 
-    x* = argmin_x 1 / (1 + dist(x, x_L))
-        where dist(A, B) is the distance between vectors A and B.
-              x_L is the mean vector in L (L's center).
+    :math:`x* = argmin_x \\frac{1}{1 + dist(x, x_L)}`
+
+    where dist(A, B) is the distance between vectors A and B.
+
+    :math:`x_L` is the mean vector in L (i.e. L's center).
     '''
     def __init__(self, metric='euclidean'):
         '''
@@ -613,7 +640,7 @@ class Density(QueryStrategy):
     Finds the example x in U that has the greatest average distance to
     every other point in U.
 
-    x* = argmin_x 1/U \sum_{u=1} ( 1 /(1 + dist(x, x_u)) )
+    :math:`x^* = argmin_x \\frac{1}{U} \\sum_{u=1} \\frac{1}{1 + dist(x, x_u)}`
     '''
     def __init__(self, metric='euclidean'):
         '''
@@ -669,11 +696,10 @@ class MinMax(QueryStrategy):
     Finds the exmaple x in U that has the maximum smallest distance
     to every point in L. Ensures representative coverage of the dataset.
 
-    x* = argmax_xi (min_xj dist(xi, xj))
-        where xi in U
-              xj in L
-              dist(.) is the given distance metric.
+    :math:`x^* = argmax_{x_i} ( min_{x_j} dist(x_i, x_j) )`
 
+    where :math:`x_i \\in U`, :math:`x_j \\in L`, dist(.) is the
+    given distance metric.
     '''
     def __init__(self, metric='euclidean'):
         '''

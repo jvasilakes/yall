@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'pall'
+project = 'yall'
 copyright = '2019, Jake Vasilakes'
 author = 'Jake Vasilakes'
 
@@ -107,7 +107,7 @@ autoclass_content = "both"
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'palldoc'
+htmlhelp_basename = 'yalldoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -134,7 +134,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'pall.tex', 'pall Documentation',
+    (master_doc, 'yall.tex', 'yall Documentation',
      'Jake Vasilakes', 'manual'),
 ]
 
@@ -144,7 +144,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'pall', 'pall Documentation',
+    (master_doc, 'yall', 'yall Documentation',
      [author], 1)
 ]
 
@@ -155,8 +155,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'pall', 'pall Documentation',
-     author, 'pall', 'One line description of project.',
+    (master_doc, 'yall', 'yall Documentation',
+     author, 'yall', 'Yet another Active Learning Library',
      'Miscellaneous'),
 ]
 

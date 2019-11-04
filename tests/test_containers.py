@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 
-from pall.containers import Data
+from yall.containers import Data
 
 
 class DataTest(unittest.TestCase):

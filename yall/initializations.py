@@ -200,7 +200,7 @@ class FacilityLocation(SetCover):
 
     :math:`J` : Set of data points.
 
-    N.B. In this case :math:`I ~=~ J` as each data point is a potential center.
+    N.B. In this case :math:`I = J` as each data point is a potential center.
 
     :math:`M` : Maximum number of centers.
 
@@ -262,7 +262,7 @@ if __name__ == "__main__":
     import argparse
     import matplotlib.pyplot as plt
     from sklearn.datasets import load_iris, load_digits, load_breast_cancer
-    from pall.datasets import load_dexter
+    from yall.datasets import load_dexter
     from sklearn.manifold import TSNE
 
     parser = argparse.ArgumentParser()
