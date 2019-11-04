@@ -1,5 +1,10 @@
 # Y'ALL: Yet another Active Learning Library
 
+[![Build Status](https://travis-ci.org/jvasilakes/yall.svg?branch=master)](https://travis-ci.org/jvasilakes/yall)
+[![Coverage Status](https://coveralls.io/repos/github/jvasilakes/yall/badge.svg?branch=master)](https://coveralls.io/github/jvasilakes/yall?branch=master)
+[![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-370/)
+[![license MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jvasilakes/yall/blob/master/LICENSE)
+
 <https://yall.readthedocs.io/>
 
 ## Getting Started
@@ -96,9 +101,6 @@ py.test --cov=yall/ tests/
 
 ## Authors
 * **Jake Vasilakes** - jvasilakes@gmail.com
-
-## License
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
 
 ## Acknowledgements
 This project grew out of a study of active learning methods for biomedical text classification. The paper associated with this study can be found at [https://doi.org/10.1093/jamiaopen/ooy021](https://doi.org/10.1093/jamiaopen/ooy021).
