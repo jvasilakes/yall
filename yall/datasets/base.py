@@ -6,6 +6,7 @@ from collections import namedtuple
 # TODO: Maybe just use sklearn.utils.Bunch
 Bunch = namedtuple("Bunch", ["data", "target", "filenames"])
 
+
 # TODO: Write unit tests for data loading functions
 def load_dexter():
     module_path = os.path.dirname(__file__)

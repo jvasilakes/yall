@@ -221,7 +221,7 @@ class FacilityLocation(SetCover):
 
     subject to
 
-                :math:`\\sum_i max_j ~y_{ij} \leq M`
+                :math:`\\sum_i max_j ~y_{ij} \\leq M`
 
                 :math:`\\sum_{ij} y_{ij} = ~|J| - ~\\epsilon`
 
@@ -251,7 +251,7 @@ class FacilityLocation(SetCover):
         constraints = [cp.sum(y) == D.shape[0],
                        cp.sum(cp.max(y, axis=1)) <= n - epsilon]
         prob = cp.Problem(cp.Minimize(cost), constraints)
-        prob.solve(solver=solver)
+        prob.solve(solver=self.solver)
 
         y_int = np.around(y.value)
         centers = np.argwhere(np.max(y_int, axis=1) == 1).ravel()

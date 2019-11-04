@@ -8,7 +8,7 @@ import numpy as np
 from collections import namedtuple
 from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression as LR
-from sklearn.datasets import load_iris, load_breast_cancer, fetch_openml
+from sklearn.datasets import load_iris, load_breast_cancer
 from sklearn.utils import shuffle
 from sklearn.model_selection import train_test_split
 
